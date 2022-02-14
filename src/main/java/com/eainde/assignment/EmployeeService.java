@@ -11,11 +11,10 @@ public class EmployeeService {
     public List<Employee> getEmployees() throws IOException {
         FileUtil util= new FileUtil();
         List<String> employeeListInString=util.getFile();
-        System.out.println("lo");
 
         // TODO write a code to get the list of employees from employeeListInString
         // Employee should be in the same order as in the csv file
-        // Don't use any plugin like opecsv
+        // Don't use any plugin like opencsv
         return null;
     }
 
