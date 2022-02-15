@@ -1,3 +1,4 @@
+
 package com.eainde.assignment.entity;
 
 public class Address {
@@ -47,19 +48,27 @@ public class Address {
 
     @Override
     public boolean equals(Object o) {
-        // TODO write a code implement this method
+        Address a = (Address) o;
+        if(a.getStreet().equals(this.getStreet()) &&
+                a.getCity().equals(this.getCity()) &&
+                a.getPostcode().equals(this.getPostcode()) &&
+                a.getCountry().equals(this.getCountry())
+
+        ) {
+            return true;
+        }
         return false;
     }
 
     @Override
     public int hashCode() {
-        // TODO write a code implement this method
-        return 0;
+
+        return this.toString().hashCode();
     }
 
     @Override
     public String toString(){
-        // TODO write a code implement this method
-        return null;
+
+        return street+" " +"\n\t "+city+ " " +"\n\t " + postcode+"\n\t " + country;
     }
 }

@@ -68,19 +68,31 @@ public class Employee {
 
     @Override
     public boolean equals(Object o) {
-        // TODO write a code implement this method
+        Boolean isEqual = false;
+
+        Employee e = (Employee) o;
+
+        if (e.id == this.id) {
+            isEqual = true;
+        }
         return false;
     }
 
+
     @Override
     public int hashCode() {
-        // TODO write a code implement this method
-        return 0;
+
+        return this.toString().hashCode();
     }
 
     @Override
     public String toString(){
         // TODO write a code implement this method
-        return null;
+        return "***************" + "\n" +
+                "Employee ID: "+id + "\n" +
+                "Name: " + name + "\n" +
+                "Age: " + age+ "\n"+
+                "Salary: " + salary + "\n" +
+                "Address: " + address;
     }
 }

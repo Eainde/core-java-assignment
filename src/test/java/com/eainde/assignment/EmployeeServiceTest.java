@@ -108,7 +108,7 @@ class EmployeeServiceTest {
 
     @Test
     @DisplayName("Checking if the method is returning highest salary employee")
-    void getHighestSalaryEmployee() {
+    void getHighestSalaryEmployee() throws IOException {
         Employee employee = getInstance().getHighestSalaryEmployee();
         Assertions.assertEquals(employee.getId(), 4);
         Assertions.assertEquals(employee.getName(), "William");
@@ -116,13 +116,13 @@ class EmployeeServiceTest {
 
     @Test
     @DisplayName("Checking if the method is returning average salary")
-    void getAverageSalary() {
+    void getAverageSalary() throws IOException {
         Assertions.assertEquals(getInstance().getAverageSalary(), 46800.09);
     }
 
     @Test
     @DisplayName("Checking if the method is returning all the employees by city")
-    void getEmployeesByCity() {
+    void getEmployeesByCity() throws IOException {
         Assertions.assertEquals(getInstance().getEmployeesByCity("Glasgow").size(), 2);
         Assertions.assertEquals(getInstance().getEmployeesByCity("Glasgow").get(0).getId(), 9);
         Assertions.assertEquals(getInstance().getEmployeesByCity("Glasgow").get(1).getId(), 4);
