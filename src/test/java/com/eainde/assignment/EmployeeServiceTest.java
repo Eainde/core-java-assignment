@@ -95,7 +95,7 @@ class EmployeeServiceTest {
 
     @Test
     @DisplayName("Checking the employee by id")
-    void getEmployeeById() {
+    void getEmployeeById() throws IOException {
         Assertions.assertEquals(getInstance().getEmployeeById(4).getId(), 4);
         Assertions.assertEquals(getInstance().getEmployeeById(4).getName(), "William");
         Assertions.assertEquals(getInstance().getEmployeeById(3).getId(), 3);

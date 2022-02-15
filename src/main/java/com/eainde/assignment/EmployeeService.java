@@ -16,14 +16,14 @@ public class EmployeeService {
 
     public List<Employee> getEmployees() throws IOException {
 
-        FileUtil util= new FileUtil();
-        List<String> employeeListInString=util.getFile();
+        FileUtil util = new FileUtil();
+        List<String> employeeListInString = util.getFile();
         List<Employee> employeeList = new ArrayList<Employee>();
 
         //Removing table heads
         employeeListInString.remove(0);
 
-        for(String employee:employeeListInString) {
+        for (String employee : employeeListInString) {
 
             String[] employeeDetails = employee.split(",");
 
@@ -33,7 +33,7 @@ public class EmployeeService {
                     Integer.parseInt(employeeDetails[2]),
                     Double.parseDouble(employeeDetails[3]),
                     employeeDetails[4],
-                    new Address(employeeDetails[5],employeeDetails[6],employeeDetails[7],employeeDetails[8])));
+                    new Address(employeeDetails[5], employeeDetails[6], employeeDetails[7], employeeDetails[8])));
         }
 
         return employeeList;
@@ -44,7 +44,7 @@ public class EmployeeService {
      *
      */
 
-    public List<Employee> sortedEmployees() throws IOException{
+    public List<Employee> sortedEmployees() throws IOException {
 
         return this.getEmployees().stream()
                 .sorted(Comparator.comparing(Employee::getName))
@@ -53,25 +53,18 @@ public class EmployeeService {
 
     }
 
-    public Employee getEmployeeById(long id){
-
+    public Employee getEmployeeById(long id)throws IOException  {
 
         Employee emp = null;
 
-        try {
+            for (Employee employee : this.getEmployees()) {
 
-            for(Employee employee: this.getEmployees()) {
-
-                if(employee.getId()==id) {
+                if (employee.getId() == id) {
                     emp = employee;
                     break;
                 }
 
             }
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
 
         return emp;
     }
@@ -80,21 +73,25 @@ public class EmployeeService {
      * Calls sorted list, takes last element of list, which is employee of higest salary
      */
 
-    public Employee getHighestSalaryEmployee() throws IOException{
+    public Employee getHighestSalaryEmployee() throws IOException {
 
         List<Employee> empList = this.sortedEmployees();
         return empList.get(0);
     }
 
-    public double  getAverageSalary() throws IOException{
+    public double getAverageSalary() throws IOException {
+
+        double finalAverage = Double.parseDouble(null);
 
         OptionalDouble average =
                 this.getEmployees().stream()
                         .map(Employee::getSalary)
                         .mapToDouble(a -> a)
                         .average();
-
-        return Math.round(average.getAsDouble() * 100.0) / 100.0;
+        if (average.isPresent()) {
+            finalAverage = average.getAsDouble();
+        }
+        return Math.round(finalAverage * 100.0) / 100.0;
     }
 
 
@@ -102,20 +99,19 @@ public class EmployeeService {
      * Add Employees from city to Hashmap and sort
      */
 
-    public List<Employee> getEmployeesByCity(String city) throws IOException{
+    public List<Employee> getEmployeesByCity(String city) throws IOException {
 
-        HashMap<String, Employee> hm = new HashMap<String, Employee>();
+        HashMap<String, Employee> employeeMap = new HashMap<>();
 
-        for(Employee e:this.getEmployees()) {
+        for (Employee e : this.getEmployees()) {
 
-            if(e.getAddress().getCity().equals(city)) {
-                hm.put(e.getName(), e);
+            if (e.getAddress().getCity().equals(city)) {
+                employeeMap.put(e.getName(), e);
             }
         }
 
-        System.out.print(hm);
 
-        return new ArrayList<Employee>(hm.values());
+        return new ArrayList<Employee>(employeeMap.values());
 
     }
 }

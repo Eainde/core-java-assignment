@@ -68,14 +68,19 @@ public class Employee {
 
     @Override
     public boolean equals(Object o) {
+        //Discuss this
         Boolean isEqual = false;
 
-        Employee e = (Employee) o;
+        Employee e = null;
 
-        if (e.id == this.id) {
-            isEqual = true;
+        if (o instanceof Employee){
+            e = (Employee) o;
+            if (e.id == this.id) {
+                isEqual = true;
+            }
         }
-        return false;
+
+        return isEqual;
     }
 
 
