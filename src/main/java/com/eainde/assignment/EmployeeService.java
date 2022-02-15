@@ -46,12 +46,11 @@ public class EmployeeService {
 
     public List<Employee> sortedEmployees() throws IOException{
 
-        List<Employee> sortedUsers = this.getEmployees().stream()
+        return this.getEmployees().stream()
                 .sorted(Comparator.comparing(Employee::getName))
                 .sorted(Comparator.comparing(Employee::getSalary).reversed()) // add for decending.reversed()
                 .collect(Collectors.toList());
 
-        return sortedUsers;
     }
 
     public Employee getEmployeeById(long id){
@@ -87,7 +86,7 @@ public class EmployeeService {
         return empList.get(0);
     }
 
-    public int getAverageSalary() throws IOException{
+    public double  getAverageSalary() throws IOException{
 
         OptionalDouble average =
                 this.getEmployees().stream()
@@ -95,8 +94,7 @@ public class EmployeeService {
                         .mapToDouble(a -> a)
                         .average();
 
-
-        return (int) average.getAsDouble();
+        return Math.round(average.getAsDouble() * 100.0) / 100.0;
     }
 
 
