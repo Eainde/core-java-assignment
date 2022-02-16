@@ -69,12 +69,10 @@ public class Employee {
     @Override
     public boolean equals(Object o) {
         //Discuss this
-        Boolean isEqual = false;
-
-        Employee e = null;
+        boolean isEqual = false;
 
         if (o instanceof Employee){
-            e = (Employee) o;
+            Employee e = (Employee) o;
             if (e.id == this.id) {
                 isEqual = true;
             }
@@ -98,6 +96,6 @@ public class Employee {
                 "Name: " + name + "\n" +
                 "Age: " + age+ "\n"+
                 "Salary: " + salary + "\n" +
-                "Address: " + address;
+                "Address: " + address.toString();
     }
 }

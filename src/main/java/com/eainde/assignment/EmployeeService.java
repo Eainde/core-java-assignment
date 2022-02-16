@@ -14,26 +14,35 @@ import java.util.stream.Collectors;
 
 public class EmployeeService {
 
-    public List<Employee> getEmployees() throws IOException {
+    public List<Employee> getEmployees() {
 
         FileUtil util = new FileUtil();
-        List<String> employeeListInString = util.getFile();
-        List<Employee> employeeList = new ArrayList<Employee>();
+        List<String> employeeListInString = null;
+        try {
+            employeeListInString = util.getFile();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<Employee> employeeList = new ArrayList<>();
 
         //Removing table heads
-        employeeListInString.remove(0);
+        try {
+                employeeListInString.remove(0);
 
-        for (String employee : employeeListInString) {
+                for (String employee : employeeListInString) {
+                    String[] employeeDetails = employee.split(",");
+                    employeeList.add(new Employee(
+                            Long.parseLong(employeeDetails[0]),
+                            employeeDetails[1],
+                            Integer.parseInt(employeeDetails[2]),
+                            Double.parseDouble(employeeDetails[3]),
+                            employeeDetails[4],
+                            new Address(employeeDetails[5], employeeDetails[6], employeeDetails[7], employeeDetails[8])));
+                }
 
-            String[] employeeDetails = employee.split(",");
 
-            employeeList.add(new Employee(
-                    Long.parseLong(employeeDetails[0]),
-                    employeeDetails[1],
-                    Integer.parseInt(employeeDetails[2]),
-                    Double.parseDouble(employeeDetails[3]),
-                    employeeDetails[4],
-                    new Address(employeeDetails[5], employeeDetails[6], employeeDetails[7], employeeDetails[8])));
+        }catch(NullPointerException n){
+            System.out.println("File does not contain any records");
         }
 
         return employeeList;
@@ -44,7 +53,7 @@ public class EmployeeService {
      *
      */
 
-    public List<Employee> sortedEmployees() throws IOException {
+    public List<Employee> sortedEmployees() {
 
         return this.getEmployees().stream()
                 .sorted(Comparator.comparing(Employee::getName))
@@ -53,18 +62,19 @@ public class EmployeeService {
 
     }
 
-    public Employee getEmployeeById(long id)throws IOException  {
+    public Employee getEmployeeById(long id) {
 
         Employee emp = null;
 
-            for (Employee employee : this.getEmployees()) {
+        for (Employee employee : this.getEmployees()) {
 
-                if (employee.getId() == id) {
-                    emp = employee;
-                    break;
-                }
-
+            if (employee.getId() == id) {
+                emp = employee;
+                break;
             }
+
+        }
+
 
         return emp;
     }
@@ -73,15 +83,16 @@ public class EmployeeService {
      * Calls sorted list, takes last element of list, which is employee of higest salary
      */
 
-    public Employee getHighestSalaryEmployee() throws IOException {
+    public Employee getHighestSalaryEmployee() {
 
         List<Employee> empList = this.sortedEmployees();
         return empList.get(0);
+
     }
 
-    public double getAverageSalary() throws IOException {
+    public double getAverageSalary() {
 
-        double finalAverage = Double.parseDouble(null);
+        double finalAverage = 0;
 
         OptionalDouble average =
                 this.getEmployees().stream()
@@ -90,7 +101,10 @@ public class EmployeeService {
                         .average();
         if (average.isPresent()) {
             finalAverage = average.getAsDouble();
+
         }
+
+
         return Math.round(finalAverage * 100.0) / 100.0;
     }
 
@@ -99,7 +113,7 @@ public class EmployeeService {
      * Add Employees from city to Hashmap and sort
      */
 
-    public List<Employee> getEmployeesByCity(String city) throws IOException {
+    public List<Employee> getEmployeesByCity(String city) {
 
         HashMap<String, Employee> employeeMap = new HashMap<>();
 
@@ -110,8 +124,7 @@ public class EmployeeService {
             }
         }
 
-
-        return new ArrayList<Employee>(employeeMap.values());
+        return new ArrayList<>(employeeMap.values());
 
     }
 }

@@ -12,7 +12,7 @@ class EmployeeServiceTest {
 
     @Test
     @DisplayName("Checking if the employees are in same order as they are in csv file")
-    void getEmployees() throws IOException {
+    void getEmployees() {
         List<Employee> list = getInstance().getEmployees();
         Assertions.assertNotNull(list);
         Assertions.assertEquals(list.get(0).getId(), 1);
@@ -48,7 +48,7 @@ class EmployeeServiceTest {
 
     @Test
     @DisplayName("Checking if the employees are sorted by salary and name")
-    void sortedEmployees() throws IOException {
+    void sortedEmployees() {
         List<Employee> list = getInstance().sortedEmployees();
         Assertions.assertNotNull(list);
         Assertions.assertEquals(list.get(0).getId(), 4);
@@ -95,7 +95,7 @@ class EmployeeServiceTest {
 
     @Test
     @DisplayName("Checking the employee by id")
-    void getEmployeeById() throws IOException {
+    void getEmployeeById() {
         Assertions.assertEquals(getInstance().getEmployeeById(4).getId(), 4);
         Assertions.assertEquals(getInstance().getEmployeeById(4).getName(), "William");
         Assertions.assertEquals(getInstance().getEmployeeById(3).getId(), 3);
@@ -108,7 +108,7 @@ class EmployeeServiceTest {
 
     @Test
     @DisplayName("Checking if the method is returning highest salary employee")
-    void getHighestSalaryEmployee() throws IOException {
+    void getHighestSalaryEmployee() {
         Employee employee = getInstance().getHighestSalaryEmployee();
         Assertions.assertEquals(employee.getId(), 4);
         Assertions.assertEquals(employee.getName(), "William");
@@ -116,13 +116,13 @@ class EmployeeServiceTest {
 
     @Test
     @DisplayName("Checking if the method is returning average salary")
-    void getAverageSalary() throws IOException {
+    void getAverageSalary(){
         Assertions.assertEquals(getInstance().getAverageSalary(), 46800.09);
     }
 
     @Test
     @DisplayName("Checking if the method is returning all the employees by city")
-    void getEmployeesByCity() throws IOException {
+    void getEmployeesByCity() {
         Assertions.assertEquals(getInstance().getEmployeesByCity("Glasgow").size(), 2);
         Assertions.assertEquals(getInstance().getEmployeesByCity("Glasgow").get(0).getId(), 9);
         Assertions.assertEquals(getInstance().getEmployeesByCity("Glasgow").get(1).getId(), 4);

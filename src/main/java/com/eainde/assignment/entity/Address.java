@@ -48,15 +48,15 @@ public class Address {
 
     @Override
     public boolean equals(Object o) {
-        Address a = (Address) o;
-        if(a.getStreet().equals(this.getStreet()) &&
-                a.getCity().equals(this.getCity()) &&
-                a.getPostcode().equals(this.getPostcode()) &&
-                a.getCountry().equals(this.getCountry())
 
-        ) {
-            return true;
+        if(o instanceof Address){
+            Address a = (Address) o;
+            return a.getStreet().equals(this.getStreet()) &&
+                    a.getCity().equals(this.getCity()) &&
+                    a.getPostcode().equals(this.getPostcode()) &&
+                    a.getCountry().equals(this.getCountry());
         }
+
         return false;
     }
 
